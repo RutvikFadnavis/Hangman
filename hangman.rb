@@ -1,9 +1,10 @@
 require 'yaml'
 
 class Game
-attr_reader :game_word, :blanks, :guesses
+attr_reader :game_word, :blanks, :guesses, :name
 
-	def initialize
+	def initialize (name)
+		@name = name
 		@guesses = 7
 		@blanks ||= []
 		@game_word = set_word
@@ -49,15 +50,44 @@ attr_reader :game_word, :blanks, :guesses
 	end
 end
 
-game = Game.new
+#until defined? current_game
+	puts "load game or new game?"
+	answer = gets.chomp 
 
-game.display
-while (game.guesses > 0) & !(game.win)
+	if answer == "new" 
+		puts "name? "
+		current_name = gets.chomp
+		current_game = Game.new(current_name)
+		puts current_game
+	elsif answer == "load"
+		puts "name? "
+		load_name = gets.chomp
+		current_game = YAML.load_file("saved_games/#{load_name}")
+		puts "#{load_name} does not exist!!!" unless defined? current_game
+	else
+		puts "invalid option!!!"
+	end
+#end
+
+current_game.display
+while (current_game.guesses > 0) & !(current_game.win)
+	puts "save game? (y/n)"
+	answer = gets.chomp
+	if answer == "y"
+		if File.exist? ("saved_games/#{current_game.name}")
+			f = File.open("saved_games/#{current_game.name}", "w")
+		else
+			f = File.new("saved_games/#{current_game.name}", "w")
+		end
+		f.puts current_game.to_yaml
+		f.close
+	end
 	print "guess: "
-	game.play(gets.chomp.upcase)
+	
+	current_game.play(gets.chomp.upcase)
 	puts ""
 	puts ""
 end
 
-puts "Congrats!! you win, you winner!!!" if game.win
-puts "You Lose!! the answer is #{game.game_word}" unless game.win
+puts "Congrats!! you win, you winner!!!" if current_game.win
+puts "You Lose!! the answer is #{current_game.game_word}" unless current_game.win

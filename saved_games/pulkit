@@ -1,0 +1,16 @@
+--- !ruby/object:Game
+name: pulkit
+guesses: 6
+blanks:
+- false
+- true
+- false
+- false
+- true
+- false
+- false
+- false
+- true
+- false
+- false
+game_word: WITHERSHINS

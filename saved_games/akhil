@@ -1,0 +1,13 @@
+--- !ruby/object:Game
+name: akhil
+guesses: 4
+blanks:
+- false
+- false
+- true
+- false
+- false
+- false
+- true
+- false
+game_word: PROCURER

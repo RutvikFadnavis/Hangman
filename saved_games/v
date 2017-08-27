@@ -1,0 +1,12 @@
+--- !ruby/object:Game
+name: v
+guesses: 5
+blanks:
+- false
+- true
+- false
+- true
+- false
+- true
+- false
+game_word: DELILAH
